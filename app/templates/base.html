@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{% block title %}Finance Tracker{% endblock %}</title>
+        <link rel="stylesheet" href="{{ url_for('static', path='/css/style.css') }}">
+
+        {% block extra_css %}<!-- Дополнительные CSS для конкретных страниц -->{% endblock %}
+    </head>
+    <body class="{% block body_class %}{% endblock %}">
+        <nav>
+            <a href="/">Главная</a>
+            <a href="/about">О проекте</a>
+            {% if user %}
+                <a href="/dashboard">Личный кабинет</a>
+            {% else %}
+                <a href="/login">Войти</a>
+            {% endif %}
+        </nav>
+
+        <div class="content-wrapper">  <!-- Добавляем контейнер для работы паддинга и тд -->
+            {% block content %}{% endblock %}
+        </div>
+
+        <footer>
+            Контакты: example@finance-tracker.com
+        </footer>
+    </body>
+</html>
