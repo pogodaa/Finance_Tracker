@@ -81,3 +81,12 @@
 .auth-footer a:hover {
     text-decoration: underline;
 }
+
+.auth-error {
+    background-color: #ffebee;
+    color: #c62828;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    border: 1px solid #ef9a9a;
+}

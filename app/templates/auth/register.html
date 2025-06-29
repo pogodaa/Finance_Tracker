@@ -8,7 +8,15 @@
 <div class="auth-container">
     <div class="auth-box">
         <h2 class="auth-title">Регистрация</h2>
-        <form class="auth-form" method="post" action="/register">
+
+        <!-- Блок для ошибок -->
+        {% if error %}
+        <div class="auth-error">
+            {{ error }}
+        </div>
+        {% endif %}
+
+        <form class="auth-form" method="post" action="/auth/register">
             <div class="form-group">
                 <label for="username">Логин</label>
                 <input type="text" id="username" name="username" required>
@@ -24,7 +32,7 @@
             <button type="submit" class="auth-button">Зарегистрироваться</button>
         </form>
         <div class="auth-footer">
-            <p>Уже есть аккаунт? <a href="/login">Войдите</a></p>
+            <p>Уже есть аккаунт? <a href="/auth/login">Войдите</a></p>
         </div>
     </div>
 </div>
