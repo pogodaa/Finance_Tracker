@@ -1,5 +1,12 @@
 {% extends "base.html" %}
 
 {% block content %}
-      <h1>Добро пожаловать в home</h1>
+<div class="welcome-container">
+    <h1>Добро пожаловать, <span class="username">{{ user.username }}</span>!</h1>
+    
+    <!-- Дополнительный контент страницы -->
+    <div class="dashboard-content">
+        Здесь будет ваш финансовый трекер...
+    </div>
+</div>
 {% endblock %}

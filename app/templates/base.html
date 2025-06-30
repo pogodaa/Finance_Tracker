@@ -11,7 +11,8 @@
             <a href="/">Главная</a>
             <a href="/about">О проекте</a>
             {% if user %}
-                <a href="/dashboard">Личный кабинет</a>
+                <a href="/home">Личный кабинет</a>
+                <a href="/auth/logout">Выйти</a>
             {% else %}
                 <a href="/auth/login">Войти</a>
             {% endif %}

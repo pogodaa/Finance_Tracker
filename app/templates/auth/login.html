@@ -8,6 +8,14 @@
 <div class="auth-container">
     <div class="auth-box">
         <h2 class="auth-title">Вход в систему</h2>
+        
+        <!-- Блок для отображения ошибки -->
+        {% if error %}
+        <div class="auth-error">
+            {{ error }}
+        </div>
+        {% endif %}
+
         <form class="auth-form" method="post" action="/auth/login">
             <div class="form-group">
                 <label for="username">Логин</label>

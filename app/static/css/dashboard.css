@@ -1,0 +1,18 @@
+/* Стили для страницы home.html */
+.welcome-container {
+    text-align: center;
+    margin-top: 2rem;
+}
+
+.username {
+    color: #3498db;
+    font-weight: bold;
+    text-transform: capitalize; /* Первая буква заглавная */
+}
+
+.dashboard-content {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    background: #f8f9fa;
+    border-radius: 10px;
+}
