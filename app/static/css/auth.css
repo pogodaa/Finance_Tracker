@@ -3,7 +3,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: calc(100vh - 230px); /* Учитываем высоту навбара и футера */
+    flex: 1; /* Занимает все доступное пространство */
     padding: 20px;
 }
 
@@ -14,6 +14,7 @@
     padding: 30px;
     width: 100%;
     max-width: 400px;
+    margin: 20px 0; /* Добавляем отступы сверху и снизу */
 }
 
 .auth-title {

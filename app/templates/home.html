@@ -1,12 +1,148 @@
 {% extends "base.html" %}
 
+{% block extra_css %}
+    <link rel="stylesheet" href="{{ url_for('static', path='/css/dashboard.css') }}">
+{% endblock %}
+
 {% block content %}
-<div class="welcome-container">
-    <h1>Добро пожаловать, <span class="username">{{ user.username }}</span>!</h1>
-    
-    <!-- Дополнительный контент страницы -->
+<div class="dashboard-container">
+    <!-- Заголовок и общая статистика -->
+    <header class="dashboard-header">
+        <h1>Финансовый менеджер <span class="username">{{ user.username }}</span></h1>
+        <div class="balance-summary">
+            <div class="balance-card income">
+                <span class="label">Доходы</span>
+                <span class="amount">{{ total_income|int }} ₽</span>
+            </div>
+            <div class="balance-card expenses">
+                <span class="label">Расходы</span>
+                <span class="amount">{{ total_expense|int }} ₽</span>
+            </div>
+            <div class="balance-card total">
+                <span class="label">Баланс</span>
+                <span class="amount">{{ (total_income - total_expense)|int }} ₽</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Основной контент в 2 колонки -->
     <div class="dashboard-content">
-        Здесь будет ваш финансовый трекер...
+        <!-- Левая колонка - добавление операций -->
+        <div class="column operations">
+            <section class="card add-operation">
+                <h2>Добавить операцию</h2>
+                <form class="operation-form" method="post" action="/transactions/add">
+                    <div class="form-group">
+                        <label for="amount">Сумма</label>
+                        <input 
+                            type="number" 
+                            id="amount" 
+                            name="amount" 
+                            step="1" 
+                            min="1" 
+                            max="10000000" 
+                            required
+                            oninput="validateAmount(this)"
+                        >
+                        <small class="form-hint">От 1 до 10 000 000 рублей</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="type">Тип</label>
+                        <select id="type" name="type" required>
+                            <option value="income">Доход</option>
+                            <option value="expense">Расход</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="category">Категория</label>
+                        <select id="category" name="category" required>
+                            {% for category in categories %}
+                            <option value="{{ category.name }}">{{ category.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="description">Описание</label>
+                        <textarea 
+                            id="description" 
+                            name="description" 
+                            rows="2"
+                            maxlength="50"
+                            oninput="countChars(this)"
+                        ></textarea>
+                        <small class="form-hint">макс. 50 символов</small>
+                    </div>
+                    
+                    <button type="submit" class="submit-btn">Добавить</button>
+
+                    {% if error %}
+                        <div class="form-error">
+                            {{ error }}
+                        </div>
+                    {% endif %}
+                </form>
+            </section>
+        </div>
+
+        <!-- Правая колонка - список операций -->
+        <div class="column analytics">
+            <section class="card recent-transactions">
+                <h2>Последние операции</h2>
+                <div class="transactions-list">
+                    {% for transaction in transactions %}
+                    <div class="transaction {% if transaction.amount > 0 %}income{% else %}expense{% endif %}">
+                        <div class="transaction-info">
+                            <span class="category">{{ transaction.category.name }}</span>
+                            <span class="description">{{ transaction.description or '' }}</span>
+                            <span class="date">{{ transaction.created_at }}</span>
+                        </div>
+                        <span class="amount">
+                            {% if transaction.amount > 0 %}+{% else %}-{% endif %}
+                            {{ transaction.amount|abs|int }} ₽  <!-- Вот это исправлено -->
+                        </span>
+                    </div>
+                    {% endfor %}
+                </div>
+                <a href="/transactions" class="view-all">Все операции →</a>
+            </section>
+            
+            <section class="card quick-stats">
+                  <h2>Статистика</h2>
+                  <div class="stats-grid">
+                        <div class="stat-item">
+                              <span class="stat-value">{{ total_income|int }} ₽</span>
+                              <span class="stat-label">Доходы</span>
+                        </div>
+                        <div class="stat-item">
+                              <span class="stat-value">{{ total_expense|int }} ₽</span>
+                              <span class="stat-label">Расходы</span>
+                        </div>
+                        <div class="stat-item">
+                              <span class="stat-value">
+                              {{ category_percents.get('Еда', 0) }}%
+                              </span>
+                              <span class="stat-label">Еда от расходов</span>
+                        </div>
+                        <div class="stat-item">
+                              <span class="stat-value">
+                              {{ category_percents.get('Транспорт', 0) }}%
+                              </span>
+                              <span class="stat-label">Транспорт</span>
+                        </div>
+                  </div>
+            </section>
+            
+            <section class="card export-section">
+                  <h2>Экспорт данных</h2>
+                  <div class="export-options">
+                        <a href="/transactions/export/csv" class="export-btn csv">CSV</a>
+                        <a href="/transactions/export/excel" class="export-btn excel">Excel</a>
+                  </div>
+            </section>
+        </div>
     </div>
 </div>
 {% endblock %}

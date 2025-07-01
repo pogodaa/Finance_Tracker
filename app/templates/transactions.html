@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{{ url_for('static', path='/css/transactions.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="transactions-container">
+    <header class="transactions-header">
+        <h1>Все операции <span class="username">{{ user.username }}</span></h1>
+        <a href="/home" class="back-link">← Назад в кабинет</a>
+    </header>
+
+    <div class="transactions-list">
+        {% for transaction in transactions %}
+        <div class="transaction-item {% if transaction.amount > 0 %}income{% else %}expense{% endif %}">
+            <div class="transaction-main">
+                <div class="transaction-info">
+                    <span class="date">{{ transaction.created_at }}</span>
+                    <span class="category">{{ transaction.category.name }}</span>
+                    <span class="description">{{ transaction.description or '' }}</span>
+                </div>
+                <span class="amount">
+                    {% if transaction.amount > 0 %}+{% else %}-{% endif %}
+                    {{ transaction.amount|abs|int }} ₽
+                </span>
+            </div>
+            
+            <div class="transaction-actions">
+                <form action="/transactions/delete/{{ transaction.id }}" method="post">
+                    <button type="submit" class="delete-btn" onclick="return confirmDelete()">Удалить</button>
+                </form>
+            </div>
+        </div>
+        {% else %}
+        <p class="no-transactions">Нет операций</p>
+        {% endfor %}
+    </div>
+</div>
+
+<script>
+function confirmDelete() {
+    return confirm('Вы уверены, что хотите удалить эту операцию?');
+}
+</script>
+{% endblock %}

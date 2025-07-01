@@ -1,5 +1,6 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+from .models import init_db_data
 from .models import Base  # Импортируем Base из models.py
 
 # Подключение к SQLite (файл БД будет создан в корне проекта как `finance.db`)
@@ -24,3 +25,14 @@ def get_db():
         yield db
     finally:
         db.close()
+
+
+# После создания таблиц:
+def init_db():
+    db = SessionLocal()
+    try:
+        init_db_data(db)
+    finally:
+        db.close()
+
+init_db()

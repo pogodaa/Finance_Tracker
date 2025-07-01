@@ -1,14 +1,15 @@
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, Depends
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
-from pathlib import Path
-from app.routers import auth  # Импортируем роутер
 from fastapi.responses import RedirectResponse
-
-from fastapi import Depends
 from sqlalchemy.orm import Session
-from app.utils.auth import get_current_user
+from sqlalchemy import func
 from app.database.database import get_db
+from app.database.crud import TransactionCRUD
+from app.database.models import Category, Transaction
+from app.utils.auth import get_current_user
+from app.routers import auth, transactions
+
 
 # uvicorn app.main:app --reload
 
@@ -16,8 +17,10 @@ app = FastAPI()
 app.mount("/static", StaticFiles(directory="app/static"), name="static")
 templates = Jinja2Templates(directory="app/templates")
 
+
 # Подключаем роутер auth.py ПЕРВЫМ (чтобы его роуты имели приоритет)
 app.include_router(auth.router)
+app.include_router(transactions.router)  
 
 
 # Остальные роуты (главная, about и т. д.)
@@ -45,7 +48,26 @@ async def home(request: Request, db: Session = Depends(get_db)):
     if not user:
         return RedirectResponse(url="/auth/login", status_code=303)
     
+    # Берем только 4 последние транзакции
+    transactions = (
+        db.query(Transaction)
+        .filter(Transaction.user_id == user.id)
+        .order_by(Transaction.timestamp.desc())
+        .limit(4)  # <-- Вот это ограничение
+        .all()
+    )
+    
+    stats = TransactionCRUD.get_monthly_stats(db, user.id)
+    
     return templates.TemplateResponse(
         "home.html",
-        {"request": request, "user": user}
+        {
+            "request": request,
+            "user": user,
+            "transactions": transactions,
+            "total_income": stats['income'],
+            "total_expense": stats['expenses'],
+            "category_percents": stats['category_percents'],
+            "categories": db.query(Category).all()
+        }
     )

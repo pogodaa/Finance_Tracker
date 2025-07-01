@@ -1,0 +1,132 @@
+/* Основные стили страницы транзакций */
+.transactions-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.transactions-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.back-link {
+    color: #3498db;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+/* Список транзакций */
+.transactions-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.transaction-item {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.transaction-main {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+}
+
+.transaction-info {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-grow: 1;
+}
+
+.transaction-info .date {
+    color: #95a5a6;
+    min-width: 90px;
+    font-size: 14px;
+}
+
+.transaction-info .category {
+    font-weight: 500;
+    min-width: 120px;
+}
+
+.transaction-info .description {
+    color: #7f8c8d;
+    font-size: 14px;
+}
+
+.amount {
+    font-weight: bold;
+    min-width: 100px;
+    text-align: right;
+    font-size: 16px;
+}
+
+.income .amount {
+    color: #2ecc71;
+}
+
+.expense .amount {
+    color: #e74c3c;
+}
+
+/* Кнопка удаления */
+.transaction-actions {
+    background: #f8f9fa;
+    padding: 0 15px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+}
+
+.transaction-item:hover .transaction-actions {
+    max-height: 60px;
+    padding: 10px 15px;
+}
+
+.delete-btn {
+    background: #ffebee;
+    color: #e74c3c;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.2s;
+}
+
+.delete-btn:hover {
+    background: #e74c3c;
+    color: white;
+}
+
+.no-transactions {
+    text-align: center;
+    padding: 40px;
+    color: #7f8c8d;
+    font-size: 18px;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .transaction-info {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+    }
+    
+    .transaction-info .date,
+    .transaction-info .category,
+    .transaction-info .description {
+        min-width: auto;
+        width: 100%;
+    }
+}

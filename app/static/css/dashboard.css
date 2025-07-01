@@ -1,18 +1,328 @@
-/* Стили для страницы home.html */
-.welcome-container {
-    text-align: center;
-    margin-top: 2rem;
+/* Основные стили */
+.dashboard-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+}
+
+.dashboard-header {
+    margin-bottom: 30px;
+}
+
+.dashboard-header h1 {
+    color: #2c3e50;
+    margin-bottom: 20px;
 }
 
 .username {
     color: #3498db;
-    font-weight: bold;
-    text-transform: capitalize; /* Первая буква заглавная */
+    font-weight: 600;
 }
 
-.dashboard-content {
-    margin-top: 2rem;
-    padding: 1.5rem;
-    background: #f8f9fa;
+/* Карточки баланса */
+.balance-summary {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.balance-card {
+    flex: 1;
+    padding: 20px;
     border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+.balance-card .label {
+    display: block;
+    font-size: 16px;
+    margin-bottom: 10px;
+    color: #7f8c8d;
+}
+
+.balance-card .amount {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.balance-card.income {
+    background-color: #e8f5e9;
+    border-left: 4px solid #2ecc71;
+}
+
+.balance-card.expenses {
+    background-color: #ffebee;
+    border-left: 4px solid #e74c3c;
+}
+
+.balance-card.total {
+    background-color: #e3f2fd;
+    border-left: 4px solid #3498db;
+}
+
+/* Двухколоночный макет */
+.dashboard-content {
+    display: flex;
+    gap: 30px;
+}
+
+.column {
+    flex: 1;
+}
+
+.column.operations {
+    flex: 0 0 400px;
+}
+
+/* Карточки */
+.card {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    padding: 25px;
+    margin-bottom: 25px;
+}
+
+.card h2 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: #2c3e50;
+    font-size: 20px;
+}
+
+/* Форма добавления операции */
+.operation-form .form-group {
+    margin-bottom: 15px;
+}
+
+.operation-form label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 500;
+    color: #34495e;
+}
+
+.operation-form input,
+.operation-form select,
+.operation-form textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.operation-form textarea {
+    resize: vertical;
+    min-height: 60px;
+}
+
+.submit-btn {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    width: 100%;
+    transition: background-color 0.3s;
+}
+
+.submit-btn:hover {
+    background-color: #2980b9;
+}
+
+/* Список операций */
+.transactions-list {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.transaction {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.transaction:last-child {
+    border-bottom: none;
+}
+
+.transaction-info {
+    flex: 1;
+}
+
+.transaction .category {
+    display: block;
+    font-weight: 500;
+    margin-bottom: 5px;
+}
+
+.transaction .description {
+    font-size: 14px;
+    color: #7f8c8d;
+    margin-bottom: 5px;
+}
+
+.transaction .date {
+    font-size: 12px;
+    color: #95a5a6;
+}
+
+.transaction .amount {
+    font-weight: bold;
+    min-width: 100px;
+    text-align: right;
+}
+
+.transaction.income .amount {
+    color: #2ecc71;
+}
+
+.transaction.expense .amount {
+    color: #e74c3c;
+}
+
+.view-all {
+    display: block;
+    text-align: right;
+    margin-top: 15px;
+    color: #3498db;
+    text-decoration: none;
+}
+
+/* Статистика */
+.stats-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.stat-item {
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.stat-value {
+    display: block;
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #2c3e50;
+}
+
+.stat-label {
+    font-size: 14px;
+    color: #7f8c8d;
+}
+
+/* Кнопки экспорта */
+.export-options {
+    display: flex;
+    gap: 10px;
+}
+
+.export-btn {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s;
+}
+
+.export-btn.csv {
+    background-color: #e3f2fd;
+    color: #3498db;
+}
+
+.export-btn.excel {
+    background-color: #e8f5e9;
+    color: #2ecc71;
+}
+
+.export-btn:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
+}
+
+/* Стили для экспорта */
+.export-section {
+    margin-top: 20px;
+}
+
+.export-options {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.export-btn {
+    flex: 1;
+    padding: 12px;
+    border-radius: 6px;
+    text-align: center;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    cursor: pointer;
+    border: 1px solid transparent;
+}
+
+.export-btn.csv {
+    background-color: #e3f2fd;
+    color: #3498db;
+    border-color: #3498db;
+}
+
+.export-btn.excel {
+    background-color: #e8f5e9;
+    color: #2ecc71;
+    border-color: #2ecc71;
+}
+
+.export-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.export-btn:active {
+    transform: translateY(0);
+}
+
+/* Иконки (если используете) */
+.icon-file-text, 
+.icon-file-excel {
+    font-size: 18px;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .dashboard-content {
+        flex-direction: column;
+    }
+    
+    .balance-summary {
+        flex-direction: column;
+    }
+    
+    .column.operations {
+        flex: 1;
+    }
+    
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
 }
