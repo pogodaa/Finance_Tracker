@@ -1,9 +1,5 @@
 # Finance Tracker - Персональный финансовый менеджер
 
-![FastAPI](https://img.shields.io/badge/FastAPI-005571?style=for-the-badge&logo=fastapi)
-![SQLite](https://img.shields.io/badge/SQLite-07405E?style=for-the-badge&logo=sqlite&logoColor=white)
-![Jinja2](https://img.shields.io/badge/Jinja2-B41717?style=for-the-badge&logo=jinja&logoColor=white)
-
 Система для учёта личных финансов с аналитикой и экспортом данных.
 
 ## 📌 Основной функционал
@@ -38,7 +34,7 @@
 - **База данных**: SQLite + SQLAlchemy ORM
 - **Аутентификация**: Сессии + куки
 
-## 🚀 Запуск проекта
+## 🚀 Запуск проекта (terminal)
 - python run.py
 - uvicorn app.main:app --reload
 
