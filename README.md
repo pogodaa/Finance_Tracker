@@ -42,7 +42,7 @@
 - **Python**: Python 3.12.3
 - **Backend**: Python + FastAPI
 - **Frontend**: Jinja2 + HTML/CSS (без JavaScript)
-- **База данных**: SQLite + SQLAlchemy ORM
+- **База данных**: SQLite
 - **Аутентификация**: Сессии + куки
 
 ## 🚀 Запуск проекта (terminal)
